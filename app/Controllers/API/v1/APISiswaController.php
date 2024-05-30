@@ -118,4 +118,26 @@ class APISiswaController extends ResourceController
         }
     }
 
+    public function post_skors() {
+        $data = $this->request->getPost();
+        
+        if ($this->skors_model->insert($data)) {
+            $dataskors = [
+                "code" => 200,
+                "status" => "Success",
+                "message" => "Data Berhasil Ditambahkan",
+                "data" => $data
+            ];
+            return $this->respond($dataskors, 200);
+        } else {
+            $dataskors = [
+                "code" => 404,
+                "status" => "Not Found",
+                "message" => "Gagal Menambahkan Data."
+            ];
+            return $this->respond($dataskors, 200);
+        }
+    }
+    
+
 }
