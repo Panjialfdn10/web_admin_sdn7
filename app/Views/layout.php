@@ -87,6 +87,12 @@
               <span class="menu-title">Soal</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('/skors') ?>">
+              <i class="icon-eye menu-icon"></i>
+              <span class="menu-title">Skors</span>
+            </a>
+          </li>
 
           <li class="nav-item d-none">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">

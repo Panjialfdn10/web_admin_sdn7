@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\SiswaModel;
 use App\Models\SoalModel;
+use App\Models\SkorsModel;
 
 
 class AdminController extends BaseController
@@ -13,10 +14,12 @@ class AdminController extends BaseController
     
     protected $model;
     protected $soalmodel;
+    protected $skorsmodel;
 
     public function __construct(){
         $this->model = new SiswaModel();
         $this->soalmodel = new SiswaModel();
+        $this->skorsmodel = new SkorsModel();
     }
 
     // ============================================================================================================ //
@@ -228,5 +231,24 @@ class AdminController extends BaseController
 
     // ============================================================================================================ //
     // ======================================== Controller End Menu Soal  ========================================= //
+    // ============================================================================================================ //
+
+    
+    // ============================================================================================================ //
+    // ========================================= Controller Menu Skors  =========================================== //
+    // ============================================================================================================ //
+
+    public function index_skors() {
+
+        $skorsmodel = new SkorsModel();
+        $skors =  $skorsmodel->get_all_Skors();
+        $data = [
+            'skors' => $skors
+        ];
+        return view('skors/index', $data);
+    }
+
+    // ============================================================================================================ //
+    // ======================================= Controller End Menu Skors  ========================================= //
     // ============================================================================================================ //
 }
