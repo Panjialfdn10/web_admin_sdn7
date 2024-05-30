@@ -17,11 +17,11 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th>Poto</th>
                                 <th style="width: 10%;">No NIS</th>
                                 <th style="width: 20%;">Nama Siswa</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Alamat</th>
-                                <th>Poto</th>
                                 <th>Email</th>
                                 <th>Aksi</th>
                             </tr>
@@ -29,15 +29,15 @@
                         <tbody>
                             <?php foreach ($siswa as $siswa): ?>
                             <tr>
-                                <td><?= esc($siswa->no_nis) ?></td>
-                                <td><?= esc($siswa->nama_siswa) ?></td>
-                                <td><?= esc($siswa->jenis_kelamin) ?></td>
-                                <td><?= esc($siswa->alamat_siswa) ?></td>
                                 <td>
                                     <?php if ($siswa->poto_siswa): ?>
                                         <img src="<?= base_url('uploads/' . $siswa->poto_siswa) ?>" alt="<?= esc($siswa->nama_siswa) ?>" width="50">
                                     <?php endif; ?>
                                 </td>
+                                <td><?= esc($siswa->no_nis) ?></td>
+                                <td><?= esc($siswa->nama_siswa) ?></td>
+                                <td><?= esc($siswa->jenis_kelamin) ?></td>
+                                <td><?= esc($siswa->alamat_siswa) ?></td>
                                 <td><?= esc($siswa->email) ?></td>
                                 <td>
                                     <a href="<?= base_url('siswa/detail_siswa/' . $siswa->id_siswa) ?>" class="btn btn-warning btn-sm">Edit</a>

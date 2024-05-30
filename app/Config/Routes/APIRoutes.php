@@ -30,8 +30,8 @@ $routes->group('api/v1', ['namespace' => 'App\Controllers\API\v1'], function($ro
 // ========================================== Routes API Menu Skors  =========================================== //
 // ============================================================================================================ //
 
-$routes->get('skors', 'APISiswaController::get_all_skors');
-$routes->post('skors/post', 'APISiswaController::post_skors');
+    $routes->get('skors', 'APISiswaController::get_all_skors');
+    $routes->post('skors/post', 'APISiswaController::post_skors');
 
 // ============================================================================================================ //
 // ======================================== Routes API End Menu Skors  ========================================= //
