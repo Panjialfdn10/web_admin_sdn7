@@ -39,6 +39,10 @@
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Masukan Email Siswa">
                 </div>
+                <div class="form-group">
+                    <label for="no_hp">No Handphone</label>
+                    <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Masukan Email Siswa">
+                </div>
                 <button type="submit" class="btn btn-primary mr-2 " id="tambahSiswa">Tambah</button>
             </form>
         </div>

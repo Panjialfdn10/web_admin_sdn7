@@ -10,7 +10,7 @@ class SiswaModel extends Model
     protected $primaryKey       = 'id_siswa';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
-    protected $allowedFields    = ['no_nis','nama_siswa','jenis_kelamin','alamat_siswa','poto_siswa','email'];
+    protected $allowedFields    = ['no_nis','nama_siswa','jenis_kelamin','alamat_siswa','poto_siswa','email', 'no_hp'];
 
     public function find_by_nis($no_nis)
     {

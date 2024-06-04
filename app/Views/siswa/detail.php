@@ -46,6 +46,10 @@
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" value="<?= $siswa->email ?>" placeholder="Masukan Email Siswa">
                 </div>
+                <div class="form-group">
+                    <label for="no_hp">No Handphone</label>
+                    <input type="number" class="form-control" id="no_hp" name="no_hp" value="<?= $siswa->no_hp ?>" placeholder="Masukan Email Siswa">
+                </div>
                 <button type="submit" class="btn btn-primary mr-2">Update</button>
                 <button class="btn btn-light">Cancel</button>
             </form>

@@ -64,6 +64,7 @@ class AdminController extends BaseController
             'alamat_siswa' => $this->request->getVar('alamat_siswa'),
             'poto_siswa' => $potoName,
             'email' => $this->request->getVar('email'),
+            'no_hp' => $this->request->getVar('no_hp'),
         ];
         $siswaModel->insert($data);
         return redirect()->to('/siswa')->with('success', 'Data Siswa Berhasil Diunggah.');
@@ -96,6 +97,7 @@ class AdminController extends BaseController
             'alamat_siswa' => $this->request->getVar('alamat_siswa'),
             'poto_siswa' => $potoName,
             'email' => $this->request->getVar('email'),
+            'no_hp' => $this->request->getVar('no_hp'),
         ];
     
         if ($siswaModel->update($id_siswa, $data)) {

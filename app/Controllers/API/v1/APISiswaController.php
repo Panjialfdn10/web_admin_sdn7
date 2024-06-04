@@ -79,7 +79,7 @@ class APISiswaController extends ResourceController
                 "code" => 200,
                 "status" => "Succes",
                 "message" => "Soal Berhasil Ditemukan",
-                "data" => array($data)
+                "data" => $data
             ];
             return $this->respond($datasiswa, 200);
         } else {

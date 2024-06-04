@@ -19,10 +19,11 @@
                             <tr>
                                 <th>Poto</th>
                                 <th style="width: 10%;">No NIS</th>
-                                <th style="width: 20%;">Nama Siswa</th>
+                                <th style="width: 10%;">Nama Siswa</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Alamat</th>
                                 <th>Email</th>
+                                <th>No Handphone</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -39,6 +40,7 @@
                                 <td><?= esc($siswa->jenis_kelamin) ?></td>
                                 <td><?= esc($siswa->alamat_siswa) ?></td>
                                 <td><?= esc($siswa->email) ?></td>
+                                <td><?= esc($siswa->no_hp) ?></td>
                                 <td>
                                     <a href="<?= base_url('siswa/detail_siswa/' . $siswa->id_siswa) ?>" class="btn btn-warning btn-sm">Edit</a>
                                     <form action="<?= base_url('siswa/delete_siswa/' . $siswa->id_siswa) ?>" method="post" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
