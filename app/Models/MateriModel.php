@@ -12,4 +12,11 @@ class MateriModel extends Model
     protected $returnType       = 'object';
     protected $allowedFields    = ['namaMateri', 'imageMateri'];
 
+    public function getMateri() {
+        $query = $this->db->table('materi')
+        ->select('materi.*, kelolamateri.*') 
+        ->join('kelolamateri', 'kelolamateri.idmateri = materi.idmateri')
+        ->get();
+    return $query->getResult();
+    }
 }

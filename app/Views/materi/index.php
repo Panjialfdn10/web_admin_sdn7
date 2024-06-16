@@ -17,8 +17,8 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Poto</th>
-                                <th>Nama Materi</th>
+                                <th style="width: 20%;">Poto</th>
+                                <th style="width: 50%;">Nama Materi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>

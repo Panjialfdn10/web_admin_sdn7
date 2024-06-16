@@ -6,6 +6,8 @@ use App\Models\SiswaModel;
 use App\Models\AuthModel;
 use App\Models\SoalModel;
 use App\Models\SkorsModel;
+use App\Models\MateriModel;
+use App\Models\KelolaMateriModel;
 
 class APISiswaController extends ResourceController
 {
@@ -13,6 +15,8 @@ class APISiswaController extends ResourceController
     protected $auth_model;
     protected $soal_model;
     protected $skors_model;
+    protected $materiModel;
+    protected $kelolaMateriModel;
 
     public function __construct()
     {
@@ -20,6 +24,8 @@ class APISiswaController extends ResourceController
         $this->auth_model = new AuthModel();
         $this->soal_model = new SoalModel();
         $this->skors_model = new SkorsModel();
+        $this->materiModel = new MateriModel();
+        $this->kelolaMateriModel = new KelolaMateriModel();
     }
 
     public function find_by_nis($no_nis)
@@ -99,7 +105,6 @@ class APISiswaController extends ResourceController
 
     public function get_all_Skors() {
         $data = $this->skors_model->get_all_Skors();
-
         if ($data) {
             $dataskors = [
                 "code" => 200,
@@ -120,7 +125,6 @@ class APISiswaController extends ResourceController
 
     public function post_skors() {
         $data = $this->request->getPost();
-        
         if ($this->skors_model->insert($data)) {
             $dataskors = [
                 "code" => 200,
@@ -139,5 +143,27 @@ class APISiswaController extends ResourceController
         }
     }
     
+    // ============================================================================================================ //
+    // ======================================= Controllers API Menu Materi  ======================================= //
+    // ============================================================================================================ //
 
+    public function getMateri() {
+        $data = $this->materiModel->getMateri();
+        if ($data) {
+            $datamateri = [
+                "code" => 200,
+                "status" => "Success",
+                "message" => "Materi Berhasil Ditemukan",
+                "data" => $data
+            ];
+            return $this->respond($datamateri, 200);
+        } else {
+            $datamateri = [
+                "code" => 404,
+                "status" => "Not Found",
+                "message" => "Gagal Menemukan Materi."
+            ];
+            return $this->respond($datamateri, 404);
+        }
+    }
 }

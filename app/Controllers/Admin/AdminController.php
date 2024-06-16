@@ -347,49 +347,45 @@ class AdminController extends BaseController
     {
         $data['materi'] = $this->materiModel->find($idMateri);
         $data['detailMateri'] = $this->kelolaMateriModel->where('idMateri', $idMateri)->first();
-        $data['imageHabitat'] = $data['detailMateri']->imageKontenMateri;
         return view('materi/kelolaMateri', $data);
     }
 
     public function post_kelolaMateri()
-{
-    $validationRules = [
-        'deskripsi' => 'required',
-        'ciriCiri' => 'required',
-    ];
+    {
+        $validationRules = [
+            'deskripsi' => 'required',
+            'ciriCiri' => 'required',
+        ];
 
-    if (!$this->validate($validationRules)) {
-        return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+        }
+
+        $imageHabitat = $this->request->getFile('imageHabitat');
+        $newImageName = '';
+
+        if ($imageHabitat->isValid() && !$imageHabitat->hasMoved()) {
+            $newImageName = $imageHabitat->getRandomName();
+            $imageHabitat->move(ROOTPATH . 'public/uploads', $newImageName);
+        }
+
+        $data = [
+            'deskripsiKontenMateri' => $this->request->getPost('deskripsi'),
+            'ciriCiriKontenMateri' => $this->request->getPost('ciriCiri'),
+            'imageKontenMateri' => $newImageName,
+            'idMateri' => $this->request->getPost('idMateri'),
+        ];
+
+        $existingData = $this->kelolaMateriModel->where('idMateri', $data['idMateri'])->first();
+
+        if ($existingData) {
+            $this->kelolaMateriModel->update($existingData->idKontenMateri, $data);
+        } else {
+            $this->kelolaMateriModel->insert($data);
+        }
+
+        return redirect()->to('/materi')->with('success', 'Data Materi Berhasil Disimpan.');
     }
-
-    $imageHabitat = $this->request->getFile('imageHabitat');
-    $newImageName = '';
-
-    if ($imageHabitat->isValid() && !$imageHabitat->hasMoved()) {
-        $newImageName = $imageHabitat->getRandomName();
-        $imageHabitat->move(ROOTPATH . 'public/uploads', $newImageName);
-    }
-
-    $data = [
-        'deskripsiKontenMateri' => $this->request->getPost('deskripsi'),
-        'ciriCiriKontenMateri' => $this->request->getPost('ciriCiri'),
-        'imageKontenMateri' => $newImageName,
-        'idMateri' => $this->request->getPost('idMateri'),
-    ];
-
-    // Cari apakah data sudah ada untuk materi ini
-    $existingData = $this->kelolaMateriModel->where('idMateri', $data['idMateri'])->first();
-
-    if ($existingData) {
-        // Jika sudah ada, update data yang ada
-        $this->kelolaMateriModel->update($existingData->idKontenMateri, $data);
-    } else {
-        // Jika belum ada, simpan data baru
-        $this->kelolaMateriModel->insert($data);
-    }
-
-    return redirect()->to('/materi')->with('success', 'Data Materi Berhasil Disimpan.');
-}
 
 
     // ============================================================================================================ //
