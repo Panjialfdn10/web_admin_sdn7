@@ -82,6 +82,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('/materi') ?>">
+              <i class="icon-book menu-icon"></i>
+              <span class="menu-title">Materi</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="<?= base_url('/soal') ?>">
               <i class="icon-menu menu-icon"></i>
               <span class="menu-title">Soal</span>

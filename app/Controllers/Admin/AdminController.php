@@ -7,6 +7,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\SiswaModel;
 use App\Models\SoalModel;
 use App\Models\SkorsModel;
+use App\Models\MateriModel;
+use App\Models\KelolaMateriModel;
 
 
 class AdminController extends BaseController
@@ -15,11 +17,15 @@ class AdminController extends BaseController
     protected $model;
     protected $soalmodel;
     protected $skorsmodel;
+    protected $materiModel;
+    protected $kelolaMateriModel;
 
     public function __construct(){
         $this->model = new SiswaModel();
         $this->soalmodel = new SiswaModel();
         $this->skorsmodel = new SkorsModel();
+        $this->materiModel = new MateriModel();
+        $this->kelolaMateriModel = new KelolaMateriModel();
     }
 
     // ============================================================================================================ //
@@ -252,5 +258,141 @@ class AdminController extends BaseController
 
     // ============================================================================================================ //
     // ======================================= Controller End Menu Skors  ========================================= //
+    // ============================================================================================================ //
+
+    // ============================================================================================================ //
+    // ========================================= Controller Menu Materi  ========================================== //
+    // ============================================================================================================ //
+   
+    public function index_materi()
+    {
+        $data['materi'] = $this->materiModel->findAll();
+        return view('materi/index', $data);
+    }
+
+    public function create_materi()
+    {
+        return view('materi/create');
+    }
+
+    public function post_materi()
+    {
+        $validationRules = [
+            'namaMateri' => 'required',
+            // 'imageMateri' => 'uploaded[imageMateri]|max_size[imageMateri,1024]|is_image[imageMateri]'
+        ];
+
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+        }
+
+        $file = $this->request->getFile('imageMateri');
+        $newName = '';
+        if ($file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+            $file->move(ROOTPATH . 'public/uploads', $newName);
+        }
+
+        $data = [
+            'namaMateri' => $this->request->getVar('namaMateri'),
+            'imageMateri' => $newName,
+        ];
+
+        $this->materiModel->insert($data);
+        return redirect()->to('/materi')->with('success', 'Data Materi Berhasil Diunggah.');
+    }
+
+    public function edit_materi($idMateri)
+    {
+        $data['materi'] = $this->materiModel->find($idMateri);
+        return view('materi/detail', $data);
+    }
+
+    public function update_materi($idMateri)
+    {
+        $validationRules = [
+            'namaMateri' => 'required',
+        ];
+
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+        }
+
+        $file = $this->request->getFile('imageMateri');
+        $newName = $this->request->getVar('oldImage');
+
+        if ($file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+            $file->move(ROOTPATH . 'public/uploads', $newName);
+        }
+
+        $data = [
+            'namaMateri' => $this->request->getVar('namaMateri'),
+            'imageMateri' => $newName,
+        ];
+
+        $this->materiModel->update($idMateri, $data);
+        return redirect()->to('/materi')->with('success', 'Data Materi Berhasil Diperbarui.');
+    }
+
+    public function delete_materi($idMateri)
+    {
+        $this->materiModel->delete($idMateri);
+        return redirect()->to('/materi')->with('success', 'Data Materi Berhasil Dihapus.');
+    }
+
+
+
+    public function kelola_materi($idMateri)
+    {
+        $data['materi'] = $this->materiModel->find($idMateri);
+        $data['detailMateri'] = $this->kelolaMateriModel->where('idMateri', $idMateri)->first();
+        $data['imageHabitat'] = $data['detailMateri']->imageKontenMateri;
+        return view('materi/kelolaMateri', $data);
+    }
+
+    public function post_kelolaMateri()
+{
+    $validationRules = [
+        'deskripsi' => 'required',
+        'ciriCiri' => 'required',
+    ];
+
+    if (!$this->validate($validationRules)) {
+        return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+    }
+
+    $imageHabitat = $this->request->getFile('imageHabitat');
+    $newImageName = '';
+
+    if ($imageHabitat->isValid() && !$imageHabitat->hasMoved()) {
+        $newImageName = $imageHabitat->getRandomName();
+        $imageHabitat->move(ROOTPATH . 'public/uploads', $newImageName);
+    }
+
+    $data = [
+        'deskripsiKontenMateri' => $this->request->getPost('deskripsi'),
+        'ciriCiriKontenMateri' => $this->request->getPost('ciriCiri'),
+        'imageKontenMateri' => $newImageName,
+        'idMateri' => $this->request->getPost('idMateri'),
+    ];
+
+    // Cari apakah data sudah ada untuk materi ini
+    $existingData = $this->kelolaMateriModel->where('idMateri', $data['idMateri'])->first();
+
+    if ($existingData) {
+        // Jika sudah ada, update data yang ada
+        $this->kelolaMateriModel->update($existingData->idKontenMateri, $data);
+    } else {
+        // Jika belum ada, simpan data baru
+        $this->kelolaMateriModel->insert($data);
+    }
+
+    return redirect()->to('/materi')->with('success', 'Data Materi Berhasil Disimpan.');
+}
+
+
+    // ============================================================================================================ //
+    // ====================================== Controller End Menu Materi  ========================================= //
     // ============================================================================================================ //
 }

@@ -20,6 +20,5 @@ class SiswaModel extends Model
             ->get();
         return $query->getRow();
     }
-    
 
 }
